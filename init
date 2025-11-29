@@ -1,0 +1,8 @@
+#!/bin/bash
+
+npm install \
+  @nestjs/typeorm typeorm pg \
+  @nestjs/jwt @nestjs/config \
+  class-validator class-transformer \
+  bcrypt \
+  ts-node @types/bcrypt
