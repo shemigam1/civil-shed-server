@@ -12,18 +12,21 @@ import {
 import { AuthService } from './auth.service';
 import { ILogin } from './auth.types';
 import { AuthGuard } from './guards/auth.guard';
+import { PassportLocalGuard } from './guards/passport-local.guard';
+import { PassportJwtGuard } from './guards/passport-jwt.guard';
 
-@Controller('auth')
-export class AuthController {
+@Controller('oauth')
+export class PassportAuthController {
   constructor(private authService: AuthService) {}
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  login(@Body() input: { username: string; password: string }) {
-    return this.authService.authenticate(input);
+  @UseGuards(PassportLocalGuard)
+  login(@Request() req) {
+    return this.authService.login(req.user);
   }
 
-  @UseGuards(AuthGuard)
   @Get('me')
+  @UseGuards(PassportJwtGuard)
   getUserInfo(@Request() req) {
     console.log(req.user);
 
